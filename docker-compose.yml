@@ -1,0 +1,15 @@
+version: '2.3'
+
+services:
+  diarization-web-service:
+    restart: always
+    container_name: diarization-web-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: diarization-web-service:latest
+    volumes:
+      - .:/diarization-web-service
+    command: bash -c "gunicorn --access-logfile - -w 1 --bind 0.0.0.0:5002 client:app --timeout 15000"
+    ports:
+      - 5002:5002
